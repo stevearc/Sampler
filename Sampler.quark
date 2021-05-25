@@ -1,0 +1,6 @@
+(
+	\name: 			"Sampler",
+	\summary:		"Tools for recording and playing back samples",
+	\author: 		"Steven Arcangeli",
+	\since: 		"2021",
+)
