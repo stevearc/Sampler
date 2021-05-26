@@ -51,7 +51,7 @@ SampleInstrument {
     // delete all existing aiff files in this dir
     PathName(dir).files.do { |file|
       if (file.extension == "aiff") {
-        File.delete(file);
+        File.delete(file.fullPath);
       }
     };
     pitchToBuffer.asAssociations.do { |a|
@@ -64,6 +64,7 @@ SampleInstrument {
     var maxPitch, pairs;
     if (pitchToBuffer[pitch].notNil) {
       pitchToBuffer[pitch].free;
+      pitchToBuffer[pitch] = nil;
     };
     pitchToBuffer.do { |buf|
       if (buf.numChannels != buffer.numChannels) {
