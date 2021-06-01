@@ -18,6 +18,7 @@
           RecordBuf.kr(freq, outbuf, run: hasFreq>threshold, loop: 0);
         }).add;
 
+        // Multisampler concept taken from https://doc.sccode.org/Tutorials/A-Practical-Guide/PG_Cookbook05_Using_Samples.html
         2.do { |i|
           var name = "samplerPlayBuf";
           var playBuf;

@@ -81,11 +81,11 @@ SampleInstrument {
     // Sort by ascending pitch
     pairs.sort({ |a, b| a.key < b.key});
     maxPitch = pairs[pairs.size - 1].key;
+    indexBuffer = Buffer.alloc(server, maxPitch, 2);
     fork {
       var data, idx = 0,
         lowBuf = pairs[0].value.bufnum,
         hiBuf = pairs[0].value.bufnum;
-      indexBuffer = Buffer.alloc(server, maxPitch, 2);
       data = Array.fill(2*maxPitch, {|i|
         var freq = (i/2) + 1;
         if (idx < pairs.size and: (freq >= pairs.clipAt(idx).key)) {

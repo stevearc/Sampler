@@ -113,6 +113,12 @@ Sampler {
     ] ++ args, target, addAction);
   }
 
+  *synthArgs { |symbol| ^this.default.synthArgs(symbol) }
+  synthArgs { |symbol|
+    var instrument = instruments[symbol];
+    ^[\pitch, bufNumToPitch, \buf, instrument.indexBuffer];
+  }
+
   *bind { |symbol| ^Sampler.default.bind(symbol) }
   bind { |symbol|
     var instrument = instruments[symbol];
@@ -140,9 +146,11 @@ Sampler {
     var instrument = SampleInstrument.new(server);
     instruments[symbol] = instrument;
     instrument.load(dir);
-    instrument.pitchToBuffer.asAssociations.do { |a|
-      bufNumToPitch.set(a.value.bufnum, a.key);
-    };
+    server.waitForBoot({
+      instrument.pitchToBuffer.pairsDo { |pitch, buffer|
+        bufNumToPitch.set(buffer.bufnum, pitch);
+      };
+    });
   }
 
   *loadAll { |dir| Sampler.default.loadAll(dir) }
